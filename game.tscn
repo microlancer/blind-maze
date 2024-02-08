@@ -1,0 +1,212 @@
+[gd_scene load_steps=7 format=3 uid="uid://wmmttby8tklb"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_u532o"]
+[ext_resource type="Texture2D" uid="uid://bavifi0ecfdfv" path="res://art/start.png" id="2_fib78"]
+[ext_resource type="Theme" uid="uid://7g1lb5xxq0j" path="res://theme.tres" id="3_1mk50"]
+[ext_resource type="Texture2D" uid="uid://dwxk4nwhswglt" path="res://art/finish.png" id="3_ciwbk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k75kw"]
+font_size = 56
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3u4hv"]
+
+[node name="Game" type="Node2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_u532o")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1080.0
+offset_bottom = 1920.0
+color = Color(0.72549, 0.658824, 0.764706, 1)
+
+[node name="Title" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.5
+offset_right = 42.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Blind Maze"
+label_settings = SubResource("LabelSettings_k75kw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Level" type="Label" parent="ColorRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -149.0
+offset_top = 87.0
+offset_right = 149.0
+offset_bottom = 164.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Level: 1"
+label_settings = SubResource("LabelSettings_k75kw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+theme = ExtResource("3_1mk50")
+
+[node name="Instructions" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.5
+offset_top = -145.0
+offset_right = 275.5
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Draw a line from the start to the finish without hitting the walls."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="WallsLayer" type="Area2D" parent="CanvasLayer"]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/WallsLayer"]
+shape = SubResource("RectangleShape2D_3u4hv")
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer/WallsLayer"]
+visible = false
+position = Vector2(0, -1)
+points = PackedVector2Array(489, 519, 749, 421)
+
+[node name="BaseStart" type="Sprite2D" parent="CanvasLayer/WallsLayer"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(847, 1470)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/BaseStart"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+
+[node name="BaseFinish" type="Sprite2D" parent="CanvasLayer/WallsLayer"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(201, 350)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/BaseFinish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+
+[node name="Levels" type="Node2D" parent="CanvasLayer/WallsLayer"]
+unique_name_in_owner = true
+
+[node name="Level1" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+visible = false
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+position = Vector2(104, 302)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level1/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+position = Vector2(847, 1583)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level1/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+
+[node name="Level2" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+position = Vector2(104, 302)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level2/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+position = Vector2(847, 1583)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level2/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
