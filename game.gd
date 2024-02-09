@@ -151,27 +151,27 @@ func within_icon_bounds(point: Vector2, icon: Sprite2D):
 	#print(within_height)
 	return within_width and within_height
 	
-func check_wall_collisionOLD(point: Vector2):
-	var tolerance = 5
-	#print("Children: " + str(current_maze.get_child_count()))
-	var child_num = 1
-	for i in current_maze.get_children():
-		
-		
-		if i is Line2D:
-			print("Checking child: " + str(child_num))
-			var global_from = i.to_global(i.points[0])
-			var global_to = i.to_global(i.points[1])
-			#print("point: " + str(point))
-			#print("global_from: " + str(global_from))
-			#print("global_to: " + str(global_to))
-			var distance = point_to_line_distance(point, global_from, global_to)			
-			if distance < tolerance:
-				print("Hit wall number " + str(child_num))
-				show_message("You hit a wall. Try again!")
-				return true
-		child_num += 1
-	return false
+#func check_wall_collisionOLD(point: Vector2):
+	#var tolerance = 5
+	##print("Children: " + str(current_maze.get_child_count()))
+	#var child_num = 1
+	#for i in current_maze.get_children():
+		#
+		#
+		#if i is Line2D:
+			#print("Checking child: " + str(child_num))
+			#var global_from = i.to_global(i.points[0])
+			#var global_to = i.to_global(i.points[1])
+			##print("point: " + str(point))
+			##print("global_from: " + str(global_from))
+			##print("global_to: " + str(global_to))
+			#var distance = point_to_line_distance(point, global_from, global_to)			
+			#if distance < tolerance:
+				#print("Hit wall number " + str(child_num))
+				#show_message("You hit a wall. Try again!")
+				#return true
+		#child_num += 1
+	#return false
 
 func check_wall_collision(last_point: Vector2, point: Vector2):
 	var tolerance = 5
@@ -213,41 +213,41 @@ func check_wall_collision(last_point: Vector2, point: Vector2):
 	#print("distance: " + str(distance))
 	#return distance
 	
-func point_to_line_distance(point: Vector2, line_start: Vector2, line_end: Vector2) -> float:
-	var distance_to_start = point.distance_to(line_start)
-	var distance_to_end = point.distance_to(line_end)
-
-	# Calculate the perpendicular distance
-	var line_dir = (line_end - line_start).normalized()
-	var point_dir = point - line_start
-	var perpendicular_distance = abs(point_dir.cross(line_dir))
-	var use_max = false
-	#if (point.x > line_end.x and point.y > line_end.y):
-		#print("de: " + str(distance_to_end) + " p: " + str(perpendicular_distance))
-		#return max(distance_to_end, perpendicular_distance)
+#func point_to_line_distanceXXX(point: Vector2, line_start: Vector2, line_end: Vector2) -> float:
+	#var distance_to_start = point.distance_to(line_start)
+	#var distance_to_end = point.distance_to(line_end)
+#
+	## Calculate the perpendicular distance
+	#var line_dir = (line_end - line_start).normalized()
+	#var point_dir = point - line_start
+	#var perpendicular_distance = abs(point_dir.cross(line_dir))
+	#var use_max = false
+	##if (point.x > line_end.x and point.y > line_end.y):
+		##print("de: " + str(distance_to_end) + " p: " + str(perpendicular_distance))
+		##return max(distance_to_end, perpendicular_distance)
+		##
+	##if (point.x < line_start.x and point.y < line_start.y):
+		##print("ds: " + str(distance_to_start) + " p: " + str(perpendicular_distance))
+		##return max(distance_to_start, perpendicular_distance)
 		#
-	#if (point.x < line_start.x and point.y < line_start.y):
-		#print("ds: " + str(distance_to_start) + " p: " + str(perpendicular_distance))
-		#return max(distance_to_start, perpendicular_distance)
-		
-	if perpendicular_distance < 10 and point < line_start:
-		print("s: " + str(distance_to_start))
-		return distance_to_start
-		
-	if perpendicular_distance < 10 and point > line_end:
-		print("e: " + str(distance_to_end))
-		return distance_to_end
-		
-		
-	#if (point < line_start):
-	#	return distance_to_start
-	
-	# Choose the maximum of perpendicular distance and distances to endpoints
-	#if use_max:
-		#print("using max")
-		#return max(perpendicular_distance, distance_to_start, distance_to_end)
-	#print("perpendicular: " + str(perpendicular_distance))
-	return perpendicular_distance
+	#if perpendicular_distance < 10 and point < line_start:
+		#print("s: " + str(distance_to_start))
+		#return distance_to_start
+		#
+	#if perpendicular_distance < 10 and point > line_end:
+		#print("e: " + str(distance_to_end))
+		#return distance_to_end
+		#
+		#
+	##if (point < line_start):
+	##	return distance_to_start
+	#
+	## Choose the maximum of perpendicular distance and distances to endpoints
+	##if use_max:
+		##print("using max")
+		##return max(perpendicular_distance, distance_to_start, distance_to_end)
+	##print("perpendicular: " + str(perpendicular_distance))
+	#return perpendicular_distance
 
 func lines_intersect(line1_start: Vector2, line1_end: Vector2, line2_start: Vector2, line2_end: Vector2) -> bool:
 	var yes = (line2_end.y - line2_start.y)
