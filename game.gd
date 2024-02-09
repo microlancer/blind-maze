@@ -1,17 +1,17 @@
 extends Node2D
 
-var maze_width: int = 1080 - 200
-var maze_height: int = 1920 - 500
-
-var maze_top_left: Vector2 = Vector2(100, 300)
-var maze_top_right: Vector2 = maze_top_left + Vector2(maze_width,0)
-var maze_bottom_left: Vector2 = maze_top_left + Vector2(0, maze_height)
-var maze_bottom_right: Vector2 = maze_bottom_left + Vector2(maze_width, 0)
-
-var maze_border_top: Array[Vector2] = [maze_top_left, maze_top_right]
-var maze_border_right: Array[Vector2] = [maze_top_right, maze_bottom_right]
-var maze_border_left: Array[Vector2] = [maze_top_left, maze_bottom_left]
-var maze_border_bottom: Array[Vector2] = [maze_bottom_left, maze_bottom_right]
+#var maze_width: int = 1080 - 200
+#var maze_height: int = 1920 - 500
+#
+#var maze_top_left: Vector2 = Vector2(100, 300)
+#var maze_top_right: Vector2 = maze_top_left + Vector2(maze_width,0)
+#var maze_bottom_left: Vector2 = maze_top_left + Vector2(0, maze_height)
+#var maze_bottom_right: Vector2 = maze_bottom_left + Vector2(maze_width, 0)
+#
+#var maze_border_top: Array[Vector2] = [maze_top_left, maze_top_right]
+#var maze_border_right: Array[Vector2] = [maze_top_right, maze_bottom_right]
+#var maze_border_left: Array[Vector2] = [maze_top_left, maze_bottom_left]
+#var maze_border_bottom: Array[Vector2] = [maze_bottom_left, maze_bottom_right]
 
 var is_drawing: bool = false
 var last_point: Vector2 = Vector2(0, 0)
@@ -28,12 +28,14 @@ var current_maze: Node = null
 var start: Sprite2D = null
 var finish: Sprite2D = null
 
-var walls = [
-	maze_border_top,
-	maze_border_bottom,
-	maze_border_left,
-	maze_border_right
-]
+var window_offset = 0
+
+#var walls = [
+	#maze_border_top,
+	#maze_border_bottom,
+	#maze_border_left,
+	#maze_border_right
+#]
 
 func get_level(level: int):
 	if current_maze:
@@ -56,9 +58,26 @@ func get_level(level: int):
 	finish = current_maze.get_node("Finish")
 	
 	return true
+	
+func _on_window_resized():
+	# Calculate the position relative to the screen size and the node size
+	var half_screen_width = DisplayServer.window_get_size().x / 2
+	print(half_screen_width)
+	var half_node_width = 1080 / 2
+	var x_position = half_screen_width - half_node_width
+	# Set the position of the node
+	self.global_position.x = x_position	
+	$Mazes.offset.x = x_position
+	$UI.offset.x = x_position
+	window_offset = x_position
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	get_tree().get_root().size_changed.connect(_on_window_resized)
+	_on_window_resized()
+		
+	%SoundButton.get_node("Sprite2D").texture = preload("res://art/prinbles.itch.io/Rect-Light-Hover/Music-Off@2x.png")
 	
 	# Hide any levels being initially shown
 	for i in %Levels.get_children():
@@ -87,28 +106,39 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func _on_button_pressed():
+	get_tree().call_deferred("quit")
+	#get_tree().quit()
+	pass # Replace with function body.
 	
-func _input(event):
+func _unhandled_input(event: InputEvent):	
+#func _input(event: InputEvent):
+
+	var pos = null
+	
 	if event is InputEventScreenTouch:
 		pass
 	
 	if event is InputEventMouseButton:
+		pos = Vector2(event.position.x - window_offset, event.position.y)
 		if not is_drawing and event.is_pressed():
 			#print("Mouse Click at: ", event.position)
-			check_is_start(event.position)
+			check_is_start(pos)
 		elif is_drawing and not event.is_pressed():
-			check_is_finish(event.position)
+			check_is_finish(pos)
 			#print("Mouse unClick at: ", event.position)
 			
 	if event is InputEventMouseMotion:
-		if is_drawing and last_point != event.position:		
+		pos = Vector2(event.position.x - window_offset, event.position.y)
+		if is_drawing and last_point != pos:		
 			#print(event.position)
-			add_drawing_point(event.position)
-			if check_wall_collision(last_point, event.position):
+			add_drawing_point(pos)
+			if check_wall_collision(last_point, pos):
 				# if there is a collision, don't bother to check finish point
 				return
-			last_point = event.position
-			check_is_finish(event.position)
+			last_point = pos
+			check_is_finish(pos)
 
 func add_drawing_point(point: Vector2):
 	drawing_line.add_point(point)	
@@ -267,6 +297,10 @@ func check_is_finish(point: Vector2):
 func show_message(text: String):
 	%Instructions.text = text
 	%Instructions.show()
-	tween.stop()
+	if tween is Tween and tween != null:
+		tween.stop()
 	%WallsLayer.modulate = Color(1, 1, 1, 1)
 	is_drawing = false
+
+
+

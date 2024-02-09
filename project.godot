@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=1080
 window/size/viewport_height=1920
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 window/handheld/orientation=1
 
 [gui]
@@ -27,5 +29,6 @@ theme/custom="res://theme.tres"
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
+renderer/rendering_method="mobile"
 renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.72549, 0.658824, 0.764706, 1)

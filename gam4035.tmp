@@ -1,0 +1,608 @@
+[gd_scene load_steps=10 format=3 uid="uid://wmmttby8tklb"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_u532o"]
+[ext_resource type="Texture2D" uid="uid://bavifi0ecfdfv" path="res://art/start.png" id="2_fib78"]
+[ext_resource type="Theme" uid="uid://7g1lb5xxq0j" path="res://theme.tres" id="3_1mk50"]
+[ext_resource type="Texture2D" uid="uid://dwxk4nwhswglt" path="res://art/finish.png" id="3_ciwbk"]
+[ext_resource type="Texture2D" uid="uid://ctk7q0yus12jh" path="res://art/prinbles.itch.io/Square-Light-Default@2x.png" id="5_x84q7"]
+[ext_resource type="Texture2D" uid="uid://pwc4ncaad5tm" path="res://art/prinbles.itch.io/Square-Light-Default/Music-On@2x.png" id="6_33cni"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k75kw"]
+font_size = 56
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3u4hv"]
+
+[sub_resource type="SystemFont" id="SystemFont_iwqjk"]
+
+[node name="Game" type="Node2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_u532o")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1080.0
+offset_bottom = 1920.0
+color = Color(0.72549, 0.658824, 0.764706, 1)
+
+[node name="Title" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.5
+offset_right = 42.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Blind Maze"
+label_settings = SubResource("LabelSettings_k75kw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Level" type="Label" parent="ColorRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -149.0
+offset_top = 87.0
+offset_right = 149.0
+offset_bottom = 164.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Level: 1"
+label_settings = SubResource("LabelSettings_k75kw")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="WallsLayer" type="Area2D" parent="CanvasLayer"]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/WallsLayer"]
+shape = SubResource("RectangleShape2D_3u4hv")
+
+[node name="Line2D" type="Line2D" parent="CanvasLayer/WallsLayer"]
+visible = false
+position = Vector2(0, -1)
+points = PackedVector2Array(489, 519, 749, 421)
+
+[node name="BaseStart" type="Sprite2D" parent="CanvasLayer/WallsLayer"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(847, 1470)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/BaseStart"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+
+[node name="BaseFinish" type="Sprite2D" parent="CanvasLayer/WallsLayer"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(201, 350)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/BaseFinish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+
+[node name="Levels" type="Node2D" parent="CanvasLayer/WallsLayer"]
+unique_name_in_owner = true
+
+[node name="Level1" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+visible = false
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+position = Vector2(104, 302)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level1/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level1"]
+position = Vector2(847, 1583)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level1/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+
+[node name="Level2" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+visible = false
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Top2" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(97, 736, 537, 736)
+
+[node name="Top3" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(493, 1183, 979, 1183)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+position = Vector2(105, 314)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level2/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+metadata/_edit_lock_ = true
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level2"]
+position = Vector2(845, 1587)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level2/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+metadata/_edit_lock_ = true
+
+[node name="Level3" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+visible = false
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Top2" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(378, 308, 378, 751)
+
+[node name="Top4" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(682, 561, 682, 1026)
+
+[node name="Top3" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(102, 1030, 685, 1030)
+
+[node name="Top5" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(395, 1377, 977, 1377)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+position = Vector2(105, 314)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level3/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+metadata/_edit_lock_ = true
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level3"]
+position = Vector2(845, 1589)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level3/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+metadata/_edit_lock_ = true
+
+[node name="Level4" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+visible = false
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Top2" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(104, 502, 784, 502)
+
+[node name="Top4" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(274, 686, 983, 686)
+
+[node name="Top3" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(279, 687, 274, 1054)
+
+[node name="Top6" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(435, 849.184, 439, 1188.92)
+
+[node name="Top7" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(634, 687.938, 637, 1027.67)
+
+[node name="Top8" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(778, 867.438, 782, 1191.96)
+
+[node name="Top5" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(103, 1184, 788, 1193)
+
+[node name="Top9" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(318, 1467, 980, 1467)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+position = Vector2(114, 326)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level4/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+metadata/_edit_lock_ = true
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level4"]
+position = Vector2(845, 1589)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level4/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+metadata/_edit_lock_ = true
+
+[node name="Level5" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+visible = false
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Top2" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(274, 300, 270, 1585)
+
+[node name="Top4" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(852, 529, 852, 1457)
+
+[node name="Top3" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(573, 1052, 573, 1391)
+
+[node name="Top6" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(714, 932.342, 266, 1301.48)
+
+[node name="Top10" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(395, 874.537, 852, 780.223)
+
+[node name="Top11" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(274, 774.138, 709, 696.051)
+
+[node name="Top12" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(376, 603.766, 848, 526.692)
+
+[node name="Top13" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(278, 486.127, 884, 388.771)
+
+[node name="Top7" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(706, 1469.83, 856, 1467.8)
+
+[node name="Top8" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(705, 1151.39, 704, 1719.3)
+
+[node name="Top5" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(569, 1578, 570, 1718)
+
+[node name="Top9" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(429, 1372, 425, 1718)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(114, 326)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level5/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+metadata/_edit_lock_ = true
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level5"]
+position = Vector2(845, 1589)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level5/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+metadata/_edit_lock_ = true
+
+[node name="Level6" type="Node2D" parent="CanvasLayer/WallsLayer/Levels"]
+
+[node name="Top" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(100, 300, 980, 300)
+
+[node name="Top2" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(98, 534, 811, 539)
+
+[node name="Top22" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(387, 410, 792, 410)
+
+[node name="Top21" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(879, 541, 976, 545)
+
+[node name="Top16" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(216, 783, 867, 786)
+
+[node name="Top18" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(545, 672, 546, 772)
+
+[node name="Top20" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(792, 646, 792, 782)
+
+[node name="Top23" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(792, 408, 799, 533)
+
+[node name="Top19" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(671, 544, 676, 688)
+
+[node name="Top17" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(101, 677, 418, 679)
+
+[node name="Top24" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(106, 414, 241, 414)
+
+[node name="Top4" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(852, 1015, 852, 1611)
+
+[node name="Top3" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, -647.816)
+scale = Vector2(1, 1.4624)
+points = PackedVector2Array(573, 1052, 573, 1391)
+
+[node name="Top6" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(-144.957, -152.336)
+scale = Vector2(1.56624, 1.11492)
+points = PackedVector2Array(714, 932.342, 464.78, 933.105)
+
+[node name="Top10" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(429, 1184.86, 421, 779.209)
+
+[node name="Top11" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(425, 1183.84, 570, 1187.9)
+
+[node name="Top12" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(433, 1012.46, 200, 1015.5)
+
+[node name="Top14" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(292, 1012.46, 292, 1622.96)
+
+[node name="Top15" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(185, 1148.35, 179, 1725.39)
+
+[node name="Top13" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(101, 894.819, 305, 897.862)
+
+[node name="Top7" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(699, 1021.58, 851, 1025.64)
+
+[node name="Top8" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(0, 16.6435)
+scale = Vector2(1, 0.986072)
+points = PackedVector2Array(700, 1022.6, 704, 1719.3)
+
+[node name="Top5" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(569, 1578, 570, 1718)
+
+[node name="Top9" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(429, 1372, 425, 1718)
+
+[node name="Left" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(100, 300, 100, 1720)
+
+[node name="Right" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(980, 300, 980, 1720)
+
+[node name="Bottom" type="Line2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+points = PackedVector2Array(100, 1720, 980, 1720)
+
+[node name="Start" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(711, 1039)
+texture = ExtResource("2_fib78")
+centered = false
+
+[node name="StartLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level6/Start"]
+offset_left = 40.0
+offset_top = 76.0
+offset_right = 117.0
+offset_bottom = 121.0
+theme = ExtResource("3_1mk50")
+theme_override_colors/font_color = Color(0, 0.627451, 0, 1)
+text = "Start"
+metadata/_edit_lock_ = true
+
+[node name="Finish" type="Sprite2D" parent="CanvasLayer/WallsLayer/Levels/Level6"]
+position = Vector2(676, 407)
+texture = ExtResource("3_ciwbk")
+centered = false
+
+[node name="FinishLabel" type="Label" parent="CanvasLayer/WallsLayer/Levels/Level6/Finish"]
+offset_left = 15.0
+offset_top = 82.0
+offset_right = 106.0
+offset_bottom = 127.0
+theme = ExtResource("3_1mk50")
+text = "Finish"
+metadata/_edit_lock_ = true
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(1080, 1920)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1080.0
+offset_bottom = 1920.0
+theme = ExtResource("3_1mk50")
+
+[node name="Instructions" type="Label" parent="Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -275.5
+offset_top = -145.0
+offset_right = 275.5
+offset_bottom = 145.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Draw a line from the start to the finish without hitting the walls."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="Control"]
+offset_left = 820.0
+offset_top = 48.0
+offset_right = 1043.0
+offset_bottom = 135.0
+text = "Quit Game"
+
+[node name="Square-light-default_2x" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(998, 80)
+texture = ExtResource("5_x84q7")
+
+[node name="Label" type="Label" parent="Square-light-default_2x"]
+offset_left = -20.0
+offset_top = -48.0
+offset_right = 36.0
+offset_bottom = 72.0
+theme_override_fonts/font = SubResource("SystemFont_iwqjk")
+theme_override_font_sizes/font_size = 66
+text = "X"
+
+[node name="Music-on_2x" type="Sprite2D" parent="."]
+position = Vector2(86, 84)
+texture = ExtResource("6_33cni")
+
+[connection signal="pressed" from="Control/Button" to="." method="_on_button_pressed"]
