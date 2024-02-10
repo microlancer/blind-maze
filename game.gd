@@ -62,9 +62,12 @@ func get_level(level: int):
 func _on_window_resized():
 	# Calculate the position relative to the screen size and the node size
 	var half_screen_width = DisplayServer.window_get_size().x / 2
-	print(half_screen_width)
-	var half_node_width = 1080 / 2
-	var x_position = half_screen_width - half_node_width
+	#print("x: " + str(DisplayServer.window_get_size().x))
+	#print(half_screen_width)
+	var half_node_width = $ColorRect.size.x / 2
+	#print(half_node_width)
+	var x_position = max(0, half_screen_width - half_node_width)
+	#print(x_position)
 	# Set the position of the node
 	self.global_position.x = x_position	
 	$Mazes.offset.x = x_position
@@ -76,7 +79,11 @@ func _ready():
 	
 	get_tree().get_root().size_changed.connect(_on_window_resized)
 	_on_window_resized()
-		
+	
+	# The quit button doesn't work on iOS, Android, or Web
+	if (OS.get_name() not in ["Windows", "macOS", "Linux"]):
+		%QuitButton.hide()
+	
 	%SoundButton.get_node("Sprite2D").texture = preload("res://art/prinbles.itch.io/Rect-Light-Hover/Music-Off@2x.png")
 	
 	# Hide any levels being initially shown
