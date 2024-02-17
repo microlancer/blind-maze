@@ -13,6 +13,7 @@ config_version=5
 config/name="Blind Maze"
 run/main_scene="res://game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+run/max_fps=15
 config/icon="res://icon.svg"
 
 [display]
@@ -31,6 +32,13 @@ theme/custom="res://theme.tres"
 
 [rendering]
 
-renderer/rendering_method="mobile"
+gl_compatibility/nvidia_disable_threaded_optimization=false
+renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+driver/threads/thread_model=0
+driver/depth_prepass/enable=false
 environment/defaults/default_clear_color=Color(0.72549, 0.658824, 0.764706, 1)
+
+[threading]
+
+worker_pool/max_threads=1
